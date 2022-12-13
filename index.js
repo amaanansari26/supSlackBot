@@ -68,7 +68,7 @@ async function run(team, channels) {
     }
   };
   const client = new WebClient(
-    "xoxb-4469953600193-4503682360148-0pCufKAIrciAYb5Ilb8PBCoy",
+    "xoxb-4469953600193-4503682360148-KflaxaUcL0yu586u9hdFlWkO",
     {
       logLevel: LogLevel.DEBUG,
     }
@@ -162,7 +162,7 @@ const getChannelListOfUser = async (userId) =>{
    const data =  await axios.post(
       url,
       params,
-      { headers: { authorization: `Bearer xoxb-4469953600193-4503682360148-0pCufKAIrciAYb5Ilb8PBCoy`,
+      { headers: { authorization: `Bearer xoxb-4469953600193-4503682360148-KflaxaUcL0yu586u9hdFlWkO`,
     "Content-Type":"application/x-www-form-urlencoded"
     } }
    );

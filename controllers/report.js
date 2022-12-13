@@ -2,7 +2,7 @@ const axios = require("axios");
 const { WebClient, LogLevel } = require("@slack/web-api");
 const { MongoClient } = require("mongodb");
 const slackClient = new WebClient(
-  "xoxb-4469953600193-4503682360148-0pCufKAIrciAYb5Ilb8PBCoy",
+  "xoxb-4469953600193-4503682360148-KflaxaUcL0yu586u9hdFlWkO",
   {
     logLevel: LogLevel.DEBUG,
   }
@@ -112,7 +112,7 @@ module.exports.sendReport = async (req, res) => {
           },
         ],
       },
-      { headers: { authorization: `Bearer xoxb-4469953600193-4503682360148-0pCufKAIrciAYb5Ilb8PBCoy` } }
+      { headers: { authorization: `Bearer xoxb-4469953600193-4503682360148-KflaxaUcL0yu586u9hdFlWkO` } }
     )
   }
 };
