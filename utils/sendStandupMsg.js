@@ -54,91 +54,29 @@ module.exports = async (team, channels)=>{
         },
         blocks: [
           {
-            type: "section",
-            text: {
-              type: "mrkdwn",
-              text: "Submit Report",
-            },
-          },
-          {
-            type: "input",
-            element: {
-              type: "plain_text_input",
-              multiline: true,
-              action_id: "plain_text_input",
-            },
-            label: {
-              type: "plain_text",
-              text: "Did you add any new projects this week? If yes provide details",
-              emoji: true,
-            },
-          },
-          {
-            type: "input",
-            element: {
-              type: "plain_text_input",
-              multiline: true,
-              action_id: "plain_text_input",
-            },
-            label: {
-              type: "plain_text",
-              text: "How is your new project pipeline looking like? How many clients in progress",
-              emoji: true,
-            },
-          },
-          {
-            type: "input",
-            element: {
-              type: "plain_text_input",
-              multiline: true,
-              action_id: "plain_text_input",
-            },
-            label: {
-              type: "plain_text",
-              text: "Did any projects get closed this week? If yes, provide details on feedback and reason.",
-              emoji: true,
-            }, 
-          },
-          {
-            type: "input",
-            element: {
-              type: "plain_text_input",
-              multiline: true,
-              action_id: "plain_text_input",
-            },
-            label: {
-              type: "plain_text",
-              text: "Are you hiring more people for your team? If yes, how is your hiring pipeline looking like? Did anyone join your team this week",
-              emoji: true,
-            }, 
-          },
-          {
-            type: "input",
-            element: {
-              type: "plain_text_input",
-              multiline: true,
-              action_id: "plain_text_input",
-            },
-            label: {
-              type: "plain_text",
-              text: "Did you add any small tech upgrade in your team? If yes what? If not why?",
-              emoji: true,
-            }, 
-          },
-          {
-            type: "input",
-            element: {
-              type: "plain_text_input",
-              multiline: true,
-              action_id: "plain_text_input",
-            },
-            label: {
-              type: "plain_text",
-              text: "How are you feeling today?",
-              emoji: true,
-            }, 
-          },
-          channelsToSend
+            "type": "actions",
+            "block_id": "btnpress",
+            "elements": [
+              {
+                "type": "button",
+                "text": {
+                  "type": "plain_text",
+                  "text": "Submit report"
+                },
+                "style": "primary",
+                "value": "click_me_456"
+              },
+              {
+                "type": "button",
+                "text": {
+                  "type": "plain_text",
+                  "text": "Primary Button"
+                },
+                "style": "primary",
+                "value": "click_me_456"
+              }
+            ]
+          }
         ],
       });
       console.log(result);
