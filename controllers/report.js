@@ -1,8 +1,9 @@
 const axios = require("axios");
+require('dotenv').config();
 const { WebClient, LogLevel } = require("@slack/web-api");
 const { MongoClient } = require("mongodb");
 const slackClient = new WebClient(
-  "xoxb-4469953600193-4503682360148-KflaxaUcL0yu586u9hdFlWkO",
+  process.env.BOTTOKEN,
   {
     logLevel: LogLevel.DEBUG,
   }
@@ -23,20 +24,20 @@ module.exports.sendReport = async (req, res) => {
   });
   const keys= Object.keys(jsonData.state.values)
   response.user  = jsonData.user;
-  response.standUp = jsonData.state.values[keys[0]].plain_text_input.value;
-  response.report = jsonData.state.values[keys[1]].plain_text_input.value;
-  response.remaining = jsonData.state.values[keys[2]].plain_text_input.value;
+  response.q1 = jsonData.state.values[keys[0]].plain_text_input.value;
+  response.q2 = jsonData.state.values[keys[1]].plain_text_input.value;
+  response.q3 = jsonData.state.values[keys[2]].plain_text_input.value;
+  response.q4 = jsonData.state.values[keys[3]].plain_text_input.value;
+  response.q5 = jsonData.state.values[keys[4]].plain_text_input.value;
+  response.q6 = jsonData.state.values[keys[5]].plain_text_input.value;
   await client.connect();
   const db = client.db(dbName);
   await db.collection("repots").insertOne(response)
   for( ch of response.selectedChannels){
     await run(ch.channelId).catch((err) => console.log("err=====================>",err));
   }
-  await slackClient.chat.postMessage({
-    channel:response.user.id,
-    text: "Your report is submitted"
 
-  });
+  
   res.status(200).send("message saved");
     
   async function run(channel_id) {
@@ -45,6 +46,7 @@ module.exports.sendReport = async (req, res) => {
       url,
       {
         channel: channel_id,
+        username:"sup",
         type: "modal",
         title: {
           type: "plain_text",
@@ -66,7 +68,7 @@ module.exports.sendReport = async (req, res) => {
             type: "header",
             text: {
               type: "plain_text",
-              text: "Stand Up",
+              text: "Did you add any new projects this week? If yes provide details",
               emoji: true,
             },
           },
@@ -74,7 +76,7 @@ module.exports.sendReport = async (req, res) => {
             type: "section",
             text: {
               type: "plain_text",
-              text: `${response.standUp}`,
+              text: `${response.q1}`,
               emoji: true,
             },
           },
@@ -82,7 +84,7 @@ module.exports.sendReport = async (req, res) => {
             type: "header",
             text: {
               type: "plain_text",
-              text: "Report",
+              text: "How is your new project pipeline looking like? How many clients in progress",
               emoji: true,
             },
           },
@@ -90,7 +92,7 @@ module.exports.sendReport = async (req, res) => {
             type: "section",
             text: {
               type: "plain_text",
-              text: `${response.report}`,
+              text: `${response.q2}`,
               emoji: true,
             },
           },
@@ -98,7 +100,7 @@ module.exports.sendReport = async (req, res) => {
             type: "header",
             text: {
               type: "plain_text",
-              text: "Remaining Work",
+              text: "Did any projects get closed this week? If yes, provide details on feedback and reason.",
               emoji: true,
             },
           },
@@ -106,13 +108,61 @@ module.exports.sendReport = async (req, res) => {
             type: "section",
             text: {
               type: "plain_text",
-              text: `${response.remaining}`,
+              text: `${response.q3}`,
+              emoji: true,
+            },
+          },
+          {
+            type: "header",
+            text: {
+              type: "plain_text",
+              text: "Are you hiring more people for your team? If yes, how is your hiring pipeline looking like? Did anyone join your team this week",
+              emoji: true,
+            },
+          },
+          {
+            type: "section",
+            text: {
+              type: "plain_text",
+              text: `${response.q4}`,
+              emoji: true,
+            },
+          },
+          {
+            type: "header",
+            text: {
+              type: "plain_text",
+              text: "Did you add any small tech upgrade in your team? If yes what? If not why?",
+              emoji: true,
+            },
+          },
+          {
+            type: "section",
+            text: {
+              type: "plain_text",
+              text: `${response.q5}`,
+              emoji: true,
+            },
+          },
+          {
+            type: "header",
+            text: {
+              type: "plain_text",
+              text: "How are you feeling today?",
+              emoji: true,
+            },
+          },
+          {
+            type: "section",
+            text: {
+              type: "plain_text",
+              text: `${response.q6}`,
               emoji: true,
             },
           },
         ],
       },
-      { headers: { authorization: `Bearer xoxb-4469953600193-4503682360148-KflaxaUcL0yu586u9hdFlWkO` } }
+      { headers: { authorization: `Bearer ${process.env.BOTTOKEN}` } }
     )
   }
 };

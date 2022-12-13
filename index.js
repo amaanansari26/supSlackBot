@@ -7,11 +7,12 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const { App } = require("@slack/bolt");
 const route = require("./routes/routes");
+require('dotenv').config()
 const { MongoClient } = require("mongodb");
-const url =
-  "mongodb+srv://xmage:xmage@cluster0-xooqb.mongodb.net/slack_settings_test?retryWrites=true";
+const url = process.env.MONGO_URI
 const client = new MongoClient(url);
 const dbName = "test";
+
 async function main() {
   await client.connect();
   const db = client.db(dbName);
@@ -68,7 +69,7 @@ async function run(team, channels) {
     }
   };
   const client = new WebClient(
-    "xoxb-4469953600193-4503682360148-KflaxaUcL0yu586u9hdFlWkO",
+    process.env.BOTTOKEN,
     {
       logLevel: LogLevel.DEBUG,
     }
@@ -112,7 +113,7 @@ async function run(team, channels) {
           },
           label: {
             type: "plain_text",
-            text: "Standup",
+            text: "Did you add any new projects this week? If yes provide details",
             emoji: true,
           },
         },
@@ -125,7 +126,7 @@ async function run(team, channels) {
           },
           label: {
             type: "plain_text",
-            text: "Report",
+            text: "How is your new project pipeline looking like? How many clients in progress",
             emoji: true,
           },
         },
@@ -138,11 +139,49 @@ async function run(team, channels) {
           },
           label: {
             type: "plain_text",
-            text: "Remaining",
+            text: "Did any projects get closed this week? If yes, provide details on feedback and reason.",
             emoji: true,
           }, 
         },
-        
+        {
+          type: "input",
+          element: {
+            type: "plain_text_input",
+            multiline: true,
+            action_id: "plain_text_input",
+          },
+          label: {
+            type: "plain_text",
+            text: "Are you hiring more people for your team? If yes, how is your hiring pipeline looking like? Did anyone join your team this week",
+            emoji: true,
+          }, 
+        },
+        {
+          type: "input",
+          element: {
+            type: "plain_text_input",
+            multiline: true,
+            action_id: "plain_text_input",
+          },
+          label: {
+            type: "plain_text",
+            text: "Did you add any small tech upgrade in your team? If yes what? If not why?",
+            emoji: true,
+          }, 
+        },
+        {
+          type: "input",
+          element: {
+            type: "plain_text_input",
+            multiline: true,
+            action_id: "plain_text_input",
+          },
+          label: {
+            type: "plain_text",
+            text: "How are you feeling today?",
+            emoji: true,
+          }, 
+        },
         channelsToSend
       ],
     });
@@ -162,7 +201,7 @@ const getChannelListOfUser = async (userId) =>{
    const data =  await axios.post(
       url,
       params,
-      { headers: { authorization: `Bearer xoxb-4469953600193-4503682360148-KflaxaUcL0yu586u9hdFlWkO`,
+      { headers: { authorization: `Bearer ${process.env.BOTTOKEN}`,
     "Content-Type":"application/x-www-form-urlencoded"
     } }
    );
@@ -181,10 +220,20 @@ const getChannelListOfUser = async (userId) =>{
   (async () => {
     let data = await main();
     console.log(data, "dddd");
-    for (let i = 0; i <= data.length - 1; i++) {
-      console.log('==============================')
-      const channels = await getChannelListOfUser(data[i].slack_id)
-      run(data[i].slack_id, channels).catch((err) => console.log(err));
+    // for (let i = 0; i <= data.length - 1; i++) {
+    //   console.log('==============================')
+    //   const channels = await getChannelListOfUser(data[i].slack_id)
+    //   run(data[i].slack_id, channels).catch((err) => console.log(err));
+    // }
+    for(user of ['U3NR87BDY', 'UGH20TBN2', 'U0FJSLHB3']){
+      try{
+        const channels = await getChannelListOfUser(user);
+        console.log(channels)
+      run(user, channels).catch((err) => console.log(err));
+      }catch(err){
+        console.log(err)
+      }
+        
     }
   })();
 // });
