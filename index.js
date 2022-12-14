@@ -43,7 +43,6 @@ app.use("/", route);
 // cron.schedule("0 10 * * 1-5", function () {
   (async () => {
     let data = await getUsers();
-    console.log(data, "dddd");
     // for (let i = 0; i <= data.length - 1; i++) {
     //   console.log('==============================')
     //   const channels = await getChannelListOfUser(data[i].slack_id)

@@ -35,8 +35,7 @@ module.exports = async (team, channels)=>{
     try {
       const result = await client.chat.postMessage({
         channel: team,
-        username: "sup",
-        text: "Hello Whatsup",
+        text: "Can you provide update?",
         title: {
           type: "plain_text",
           text: "My App",
@@ -54,6 +53,14 @@ module.exports = async (team, channels)=>{
         },
         blocks: [
           {
+            type: "section",
+            text: {
+              type: "plain_text",
+              text: "Hey! Can you provide update for today?",
+              emoji: true,
+            },
+          },
+          {
             "type": "actions",
             "block_id": "btnpress",
             "elements": [
@@ -64,16 +71,16 @@ module.exports = async (team, channels)=>{
                   "text": "Submit report"
                 },
                 "style": "primary",
-                "value": "click_me_456"
+                "value": "report"
               },
               {
                 "type": "button",
                 "text": {
                   "type": "plain_text",
-                  "text": "Primary Button"
+                  "text": "Not working today"
                 },
-                "style": "primary",
-                "value": "click_me_456"
+                "style": "danger",
+                "value": "not_working"
               }
             ]
           }
