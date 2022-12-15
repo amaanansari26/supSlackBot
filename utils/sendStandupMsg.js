@@ -61,7 +61,6 @@ module.exports = async (team, channels)=>{
           }
         ],
       });
-      console.log(result);
     } catch (error) {
       console.error(error);
     }

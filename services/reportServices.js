@@ -129,11 +129,9 @@ exports.btnPress = async (jsonData)=>{
       }
     });
     }else{
-      console.log(jsonData?.user)
       const userid = jsonData?.user?.id;
       for (ch of channels){
         const url = "https://slack.com/api/chat.postMessage";
-        console.log(ch)
         await axios.post(
           url,
           {
@@ -182,7 +180,7 @@ exports.formSubmission = async (jsonData)=>{
     await db.collection("repots").insertOne(response)
     const user = (await axios.get(`https://slack.com/api/users.info?user=${jsonData?.user?.id}`,{ headers: { authorization: `Bearer ${process.env.BOTTOKEN}` } }))?.data;
     for( ch of response.selectedChannels){
-      await run(ch.channelId).catch((err) => console.log("err=====================>",err));
+      await run(ch.channelId);
     }
     const response_url = jsonData.view.blocks[0].block_id
     await axios.post(

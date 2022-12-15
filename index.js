@@ -26,8 +26,7 @@ app.use("/", route);
 //error handling
 app.use((err, req, res, next) => {
   
-  console.error(err)
-  console.log('here')
+  console.log(err)
   res.status(500).send('An error occurred!')
 });
 

@@ -5,7 +5,6 @@ module.exports =  async (userId) =>{
     const url = "https://slack.com/api/users.conversations";
     const params = new URLSearchParams();
     params.append('user', userId);
-    console.log(userId)
     
      const data =  await axios.post(
         url,
