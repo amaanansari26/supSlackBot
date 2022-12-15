@@ -10,48 +10,42 @@ const run = require('./utils/sendStandupMsg');
 const getChannelListOfUser = require('./utils/getChannelListOfUser')
 
 async function getUsers() {
-  const db = await getDb()
+  const db = await getDb();
   let collection = await db.collection("users").find().toArray();
   return collection;
 }
 
 
-app.use(
-  express.json({
-    limit: "500mb",
-    extended: true,
-  })
-);
-app.use(
-  bodyParser.urlencoded({
-    limit: "500mb",
-    parameterLimit: 50000,
-    extended: true,
-  })
-);
-app.use(
-  cors({
-    origin: true,
-  })
-);
+app.use(express.json({limit: "500mb",extended: true,}));
+app.use(bodyParser.urlencoded({limit: "500mb",parameterLimit: 50000,extended: true,}));
+app.use(cors({origin: true,}));
 
 //routes
 app.use("/", route);
 
+//error handling
+app.use((err, req, res, next) => {
+  
+  console.error(err)
+  console.log('here')
+  res.status(500).send('An error occurred!')
+});
 
-
-// cron.schedule("0 10 * * 1-5", function () {
+cron.schedule("0 10 * * 1-5", function () {
   (async () => {
     let data = await getUsers();
+
+    // to get ids of all users
     // for (let i = 0; i <= data.length - 1; i++) {
     //   console.log('==============================')
     //   const channels = await getChannelListOfUser(data[i].slack_id)
     //   run(data[i].slack_id, channels).catch((err) => console.log(err));
     // }
+
+    //hard coded ids of team leaders
     for(user of ['U04DU23UTUZ']){
       try{
         const channels = await getChannelListOfUser(user);
-        console.log(channels)
       run(user, channels).catch((err) => console.log(err));
       }catch(err){
         console.log(err)
@@ -59,12 +53,11 @@ app.use("/", route);
         
     }
   })();
-// });
+});
 
 cron.schedule("30 18 * * 1-5", function () {
   (async () => {
     let data = await getUsers();
-    console.log(data, "dddd");
     for (let i = 0; i <= data.length - 1; i++) {
       run(data[i].slack_id).catch((err) => console.log(err));
     }

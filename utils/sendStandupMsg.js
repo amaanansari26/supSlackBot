@@ -1,30 +1,5 @@
 const { WebClient, LogLevel } = require("@slack/web-api");
 module.exports = async (team, channels)=>{
-    const channelsToSend = {
-      "type": "section",
-      "block_id": "section678",
-      "text": {
-        "type": "mrkdwn",
-        "text": "Select channels to send"
-      },
-      "accessory": {
-        "action_id": "actionId-0",
-        "type": "multi_static_select",
-        "placeholder": {
-          "type": "plain_text",
-          "text": "Select items"
-        },
-        "options": channels.map(ch=>{
-          return {
-            "text": {
-              "type": "plain_text",
-              "text": ch.channelName
-            },
-            "value": ch.channelId,
-          }
-        })
-      }
-    };
     const client = new WebClient(
       process.env.BOTTOKEN,
       {

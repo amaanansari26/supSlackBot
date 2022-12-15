@@ -1,5 +1,6 @@
 const axios = require("axios");
 module.exports =  async (userId) =>{
+  try{
     let channels = []
     const url = "https://slack.com/api/users.conversations";
     const params = new URLSearchParams();
@@ -22,4 +23,6 @@ module.exports =  async (userId) =>{
       })
      }
      return channels
+  }catch(err){throw err}
+   
   }
