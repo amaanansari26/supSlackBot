@@ -19,7 +19,6 @@
     "localtunnel": "^2.0.2",
     "mongo-client": "^0.2.1",
     "mongodb": "^4.12.1",
-    "mongoose": "^6.7.4",
     "node-cron": "^3.0.2"
   }
 }
