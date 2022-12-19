@@ -1,5 +1,5 @@
 <p>Slack sup bot</p>
-<p>Steps to configure the app.</p>
+<p>Steps to configure the app:</p>
 <ol>
     <li>Clone the repository.</li>
     <li>Edit env:<ol>
