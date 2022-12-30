@@ -8,6 +8,7 @@ const route = require("./routes/routes");
 const sendStandup = require('./utils/sendStandupMsg');
 const sendReport = require('./utils/sendReportMsg');
 const getUsersList = require('./utils/getUsersList');
+const checkStandupToday = require('./utils/checkStandupToday')
 
 
 
@@ -53,21 +54,23 @@ cron.schedule("30 18 * * 1-6", function () {
   (async () => {
     const users = await getUsersList()
     for(user of users){
-      try{
-        if(user.status ==="Enabled"){
-          if(user.role === "manager"){
-          }else if(user.jobtitle === "HR Executive"){
-            await sendReport.toHrs(user['slack_id'])
-          }else if(user['slack_id'] === 'UC48M1TAT'){
-            await sendReport.toAnuj(user['slack_id'])
-          }else{
-            await sendReport.toEmployees(user['slack_id'])
+      if(await checkStandupToday(user)){
+        try{
+          if(user.status ==="Enabled"){
+            if(user.role === "manager"){
+            }else if(user.jobtitle === "HR Executive"){
+              await sendReport.toHrs(user['slack_id'])
+            }else if(user['slack_id'] === 'UC48M1TAT'){
+              await sendReport.toAnuj(user['slack_id'])
+            }else{
+              await sendReport.toEmployees(user['slack_id'])
+            }
           }
+        }catch(err){
+          console.log(err)
         }
-      }catch(err){
-        console.log(err)
+          
       }
-        
     }
   })();
 });

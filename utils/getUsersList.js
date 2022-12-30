@@ -5,7 +5,7 @@ module.exports =  async () =>{
   try{
     const db= await getDb();
         const collection = db.collection('users');
-        const users = await collection.find({"slack_id":"U0405L5FN2G"}).toArray();
+        const users = await collection.find().toArray();
         users.forEach(user=>{
           if(user.jobtitle === "HR Executive" && user.name === "Sanskriti Bhatnagar") user['slack_id'] = "U040M644EKT"
           if(user.jobtitle === "HR Executive" && user.name === "Isha Tadhiyal") user['slack_id'] = "U04031UQKQT"

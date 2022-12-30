@@ -690,8 +690,10 @@ exports.formSubmission = async (jsonData) => {
     const userInDb = await db.collection('users').findOne({ "slack_id": jsonData.user.id });
     if(userInDb){
       response.user = userInDb._id;
+      response['slack_id'] = jsonData.user.id;
     }else{
-      response.user = jsonData.user.id;
+      response.user = ""
+      response['slack_id'] = jsonData.user.id;
     }
     response['created_at'] = new Date();
     if (response.type === 'standup') {
