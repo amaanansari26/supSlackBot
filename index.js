@@ -29,20 +29,16 @@ cron.schedule("30 9 * * 1-6", function () {
   (async () => {
     const users = await getUsersList()
     for(user of users){
-      console.log(user)
       try{
         if(user.status ==="Enabled"){
           if(user.role === "manager"){
-            console.log('1')
             await sendStandup.toTeamLeads(user['slack_id'])
           }else if(user.jobtitle === "HR Executive"){
             await sendStandup.toHrs(user['slack_id'])
-            console.log('2')
           }else if(user['slack_id'] === 'UC48M1TAT'){
             await sendStandup.toAnuj(user['slack_id'])
           }else{
             await sendStandup.toEmployees(user['slack_id'])
-            console.log('3')
           }
         }
       }catch(err){
@@ -57,19 +53,15 @@ cron.schedule("30 18 * * 1-6", function () {
   (async () => {
     const users = await getUsersList()
     for(user of users){
-      console.log(user)
       try{
         if(user.status ==="Enabled"){
           if(user.role === "manager"){
-            console.log("no report is set for manager")
           }else if(user.jobtitle === "HR Executive"){
             await sendReport.toHrs(user['slack_id'])
-            console.log('2')
           }else if(user['slack_id'] === 'UC48M1TAT'){
             await sendReport.toAnuj(user['slack_id'])
           }else{
             await sendReport.toEmployees(user['slack_id'])
-            console.log('3')
           }
         }
       }catch(err){

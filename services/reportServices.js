@@ -678,7 +678,6 @@ exports.formSubmission = async (jsonData) => {
       }
     });
     const keys = Object.keys(jsonData.view.state.values);
-    console.log(jsonData.view.blocks)
     const qa = [];
     jsonData.view.blocks.forEach((block, i) => {
       if (block.type === 'input') {

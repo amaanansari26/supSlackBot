@@ -11,14 +11,11 @@ module.exports.sendReport = async (req, res, next) => {
     await reportServices.formSubmission(jsonData);
   }else{
     if(jsonData.message.blocks[1].elements[0].value === "standup_tmlds"){
-      console.log('team leader')
       await reportServices.standupBtnByTeamLeader(jsonData);
     }else if(jsonData.message.blocks[1].elements[0].value === "standup_hrs"){
       await reportServices.standupBtnByHr(jsonData);
-      console.log('hr')
     }else if(jsonData.message.blocks[1].elements[0].value === "report_hrs"){
       await reportServices.standupBtnByHr(jsonData);
-      console.log('hr')
     }else if(jsonData.message.blocks[1].elements[0].value === "standup_anuj"){
       await reportServices.standupBtnByAnuj(jsonData);
     }else if(jsonData.message.blocks[1].elements[0].value === "report_anuj"){
@@ -26,7 +23,6 @@ module.exports.sendReport = async (req, res, next) => {
     }else if(jsonData.message.blocks[1].elements[0].value === "standup_emps"){
       await reportServices.standupBtnByEmployee(jsonData);
     }else{
-      console.log('employeee')
       await reportServices.standupBtnByEmployee(jsonData);
     }
   }
