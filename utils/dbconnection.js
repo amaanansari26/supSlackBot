@@ -9,5 +9,5 @@ module.exports = async()=>{
     const db = client.db(process.env.DBNAME);
     return db
     }catch(err){throw err}
-    
+    return {};
 }

@@ -1,7 +1,15 @@
 const router = require("express").Router();
-const report  = require("../controllers/report");
+const reportController  = require("../controllers/report");
+const oauthController = require("../controllers/oauth");
 
-router.post("/", report.sendReport);
+const axios = require('axios');
+const fs = require('fs/promises');
+const path = require('path');
+const dotenv = require('dotenv');
+
+
+router.post("/", reportController.sendReport);
+router.get("/", oauthController.auth);
 
 
 module.exports = router;
