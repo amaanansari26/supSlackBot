@@ -687,7 +687,7 @@ exports.formSubmission = async (jsonData) => {
     response.qA = qa;
 
     const db = await getDb()
-    const userInDb = await db.collection('users').findOne({ "slack_id": jsonData.user.id });
+    const userInDb = await db.collection('supUsers').findOne({ "slack_id": jsonData.user.id });
     if(userInDb){
       response.user = userInDb._id;
       response['slack_id'] = jsonData.user.id;

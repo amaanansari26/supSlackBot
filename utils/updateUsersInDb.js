@@ -9,7 +9,19 @@ module.exports =  async () =>{
     const data = await axios.get('https://slack.com/api/users.list',await getHeaders())
     const newUsers = data.data.members;
     const db= await getDb();
-        const collection = db.collection('supUsers').insertMany(newUsers);
+    const users = await db.collection('users').find({}).toArray();
+    users.forEach((user,i)=>{
+      newUsers.every(nuser=>{
+        if(user.name === nuser['real_name']){
+
+          users[i]['slack_id'] = nuser.id;
+        }
+        return true;
+      })
+    })
+     await db.collection('supUsers').deleteMany({});
+     await db.collection('supUsers').insertMany(users);
+    
 
         //const users = await collection.find({"slack_id":"U0405L5FN2G"}).toArray();
      return []

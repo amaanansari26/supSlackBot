@@ -9,7 +9,7 @@ const sendStandup = require('./utils/sendStandupMsg');
 const sendReport = require('./utils/sendReportMsg');
 const getUsersList = require('./utils/getUsersList');
 const checkStandupToday = require('./utils/checkStandupToday')
-
+const updateUserInDb = require('./utils/updateUsersInDb')
 
 
 app.use(express.json({limit: "500mb",extended: true,}));
@@ -75,7 +75,7 @@ cron.schedule("30 18 * * 1-6", function () {
   })();
 });
 
-
+// updateUserInDb()
 app.listen(8000);
 
 

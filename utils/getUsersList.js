@@ -4,7 +4,7 @@ const getToken = require('./getToken')
 module.exports =  async () =>{
   try{
     const db= await getDb();
-        const collection = db.collection('users');
+        const collection = db.collection('supUsers');
         const users = await collection.find().toArray();
         users.forEach(user=>{
           if(user.jobtitle === "HR Executive" && user.name === "Sanskriti Bhatnagar") user['slack_id'] = "U040M644EKT"
