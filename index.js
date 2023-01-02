@@ -31,7 +31,7 @@ cron.schedule("30 9 * * 1-6", function () {
     const users = await getUsersList()
     for(user of users){
       try{
-        if(user.status ==="Enabled"){
+        if(user.status ==="Enabled" && user["slack_id"] !== "U0FK0J6L9" && user["slack_id"] !== "U0FJQUFMG"){
           if(user.role === "manager"){
             await sendStandup.toTeamLeads(user['slack_id'])
           }else if(user.jobtitle === "HR Executive"){

@@ -44,7 +44,7 @@ exports.toTeamLeads= async (team, channels)=>{
                 "type": "button",
                 "text": {
                   "type": "plain_text",
-                  "text": "Submit report"
+                  "text": "Submit Standup"
                 },
                 "style": "primary",
                 "value": "standup_tmlds"
@@ -111,7 +111,7 @@ exports.toTeamLeads= async (team, channels)=>{
                 "type": "button",
                 "text": {
                   "type": "plain_text",
-                  "text": "Submit report"
+                  "text": "Submit Standup"
                 },
                 "style": "primary",
                 "value": "standup_hrs"
@@ -178,7 +178,7 @@ exports.toTeamLeads= async (team, channels)=>{
                 "type": "button",
                 "text": {
                   "type": "plain_text",
-                  "text": "Submit report"
+                  "text": "Submit Standup"
                 },
                 "style": "primary",
                 "value": "standup_emps"
@@ -245,7 +245,7 @@ exports.toTeamLeads= async (team, channels)=>{
                 "type": "button",
                 "text": {
                   "type": "plain_text",
-                  "text": "Submit report"
+                  "text": "Submit Standup"
                 },
                 "style": "primary",
                 "value": "standup_anuj"

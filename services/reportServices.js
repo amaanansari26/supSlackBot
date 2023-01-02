@@ -723,7 +723,7 @@ exports.formSubmission = async (jsonData) => {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `${response.type}:`,
+          text: `*${response.type.toUpperCase()}*:`,
         },
       }];
       qa.forEach(q => {
@@ -731,16 +731,16 @@ exports.formSubmission = async (jsonData) => {
           type: "section",
           text: {
             type: "mrkdwn",
-            text: q.question,
+            text: `*${q.question}*\n>${q.answer}`,
           },
         });
-        qas.push({
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: `>${q.answer}`,
-          },
-        },)
+        // qas.push({
+        //   type: "section",
+        //   text: {
+        //     type: "mrkdwn",
+        //     text: `>${q.answer}`,
+        //   },
+        // },)
       })
       const url = "https://slack.com/api/chat.postMessage";
       console.log(await axios.post(
