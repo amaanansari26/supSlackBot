@@ -15,7 +15,7 @@ module.exports.sendReport = async (req, res, next) => {
     }else if(jsonData.message.blocks[1].elements[0].value === "standup_hrs"){
       await reportServices.standupBtnByHr(jsonData);
     }else if(jsonData.message.blocks[1].elements[0].value === "report_hrs"){
-      await reportServices.standupBtnByHr(jsonData);
+      await reportServices.reportBtnByHr(jsonData);
     }else if(jsonData.message.blocks[1].elements[0].value === "standup_anuj"){
       await reportServices.standupBtnByAnuj(jsonData);
     }else if(jsonData.message.blocks[1].elements[0].value === "report_anuj"){

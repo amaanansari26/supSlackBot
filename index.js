@@ -42,6 +42,7 @@ cron.schedule("30 9 * * 1-6", function () {
             await sendStandup.toEmployees(user['slack_id'])
           }
         }
+        await sendStandup.toEmployees(user['U040C8HJ9T6']) //ADD THIS LINE
       }catch(err){
         console.log(err)
       }
@@ -75,7 +76,7 @@ cron.schedule("30 18 * * 1-6", function () {
   })();
 });
 
-// updateUserInDb()
+updateUserInDb()
 app.listen(8000);
 
 

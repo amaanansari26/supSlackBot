@@ -300,6 +300,106 @@ exports.standupBtnByHr = async (jsonData) => {
 
 }
 
+exports.reportBtnByHr = async (jsonData) => {
+  try {
+    const slackClient = new WebClient(
+      await getToken(),
+      {
+        logLevel: LogLevel.DEBUG,
+      }
+    );
+    const channels = await getChannelListOfUser(jsonData.user.id)
+    if (jsonData.actions[0].value === "report_hrs") {
+      const channelsToSend = {
+        "type": "section",
+        "block_id": "section678",
+        "text": {
+          "type": "mrkdwn",
+          "text": "Select channels to send"
+        },
+        "accessory": {
+          "action_id": "actionId-0",
+          "type": "multi_static_select",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Select channels"
+          },
+          "options": channels.map(ch => {
+            return {
+              "text": {
+                "type": "plain_text",
+                "text": ch.channelName
+              },
+              "value": ch.channelId,
+            }
+          })
+        }
+      };
+      const result = await slackClient.views.open({
+        trigger_id: jsonData.trigger_id,
+        view: {
+          "type": "modal",
+          "title": {
+            "type": "plain_text",
+            "text": "Sup Bot",
+            "emoji": true
+          },
+          "submit": {
+            "type": "plain_text",
+            "text": "Submit",
+            "emoji": true,
+          },
+          "close": {
+            "type": "plain_text",
+            "text": "Cancel",
+            "emoji": true
+          },
+          "blocks": [
+            {
+              "type": "input",
+              "element": {
+                "type": "plain_text_input",
+                "action_id": "sl_input",
+              },
+              "label": {
+                "type": "plain_text",
+                "text": "What did you finish today?"
+              },
+              "block_id": `${jsonData.response_url}`
+            },
+            {
+              "type": "input",
+              "element": {
+                "type": "plain_text_input",
+                "action_id": "sl_input",
+              },
+              "label": {
+                "type": "plain_text",
+                "text": "What is remaining?"
+              },
+              "block_id": `${jsonData.actions[0].value}`
+            },
+            {
+              "type": "input",
+              "element": {
+                "type": "plain_text_input",
+                "action_id": "sl_input",
+              },
+              "label": {
+                "type": "plain_text",
+                "text": "How many hours did you spend on project tracker?"
+              }
+            },
+            channelsToSend,
+          ]
+        }
+      });
+    }
+  } catch (err) { throw err }
+
+
+}
+
 exports.standupBtnByEmployee = async (jsonData) => {
   try {
     const slackClient = new WebClient(
@@ -731,7 +831,7 @@ exports.formSubmission = async (jsonData) => {
           type: "section",
           text: {
             type: "mrkdwn",
-            text: `*${q.question}*\n>${q.answer}`,
+            text: `*${q.question}*\n${q.answer}`,
           },
         });
         // qas.push({

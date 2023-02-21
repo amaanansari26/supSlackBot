@@ -7,6 +7,7 @@ module.exports =  async () =>{
         const collection = db.collection('supUsers');
         const users = await collection.find().toArray();
         users.forEach(user=>{
+          if(user['slack_id'] === "U040M644EKT") user.jobtitle = "HR Executive"
           if(user.jobtitle === "HR Executive" && user.name === "Sanskriti Bhatnagar") user['slack_id'] = "U040M644EKT"
           if(user.jobtitle === "HR Executive" && user.name === "Isha Tadhiyal") user['slack_id'] = "U04031UQKQT"
           if(user['slack_id'] === "UC48M1TAT") user.role = ""
